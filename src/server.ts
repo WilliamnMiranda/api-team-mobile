@@ -1,19 +1,23 @@
+// import libs
 import mongoose, { ConnectOptions } from "mongoose";
-const express = require("express");
+import bodyParser from "body-parser";
+import express from "express";
+import connectToDatabase from "./helpers/connectMongo";
+// import routes
+import userRouter from "./routes/UserRoutes";
+
+// configs
 const app = express();
 const PORT = process.env.PORT || 8081;
 require("dotenv").config();
-mongoose
-	.connect(
-		process.env.DATABASE as string,
-		{
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		} as ConnectOptions,
-	)
-	.then(() => console.log("conectado ao banco"))
-	.catch((e) => console.log("error"));
-
-app.listen(PORT, () => {
+//server
+connectToDatabase();
+// midlewares
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+// routes
+app.use("/user", userRouter);
+export const server = app.listen(PORT, () => {
 	console.log(`Example app listening on port ${PORT}`);
 });

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const UserModel = new mongoose.Schema({
 	name: String,
 	cpf: {
-		type: String,
+		type: Number,
 		require: true,
 		unique: true,
 	},
