@@ -5,6 +5,7 @@
 		"jsonwebtoken": "^9.0.0",
 		"mongoose": "^7.0.4",
 		"nodemon": "^2.0.22",
+		"supertest": "^6.3.3",
 		"tsup": "^6.7.0"
 	},
 	"scripts": {
