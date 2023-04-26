@@ -8,9 +8,9 @@
 		"tsup": "^6.7.0"
 	},
 	"scripts": {
-		"build": "tsup server.ts",
-		"start": "tsx watch server.ts",
-		"start:dev": "tsx watch server.ts"
+		"build": "tsup ./src/server.ts",
+		"start": "tsx watch ./src/server.ts",
+		"start:dev": "tsx watch ./src/server.ts"
 	},
 	"devDependencies": {
 		"tsx": "^3.12.6",
