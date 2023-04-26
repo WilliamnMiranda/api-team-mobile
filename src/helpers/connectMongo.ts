@@ -8,10 +8,7 @@ async function connectToDatabase() {
 				useUnifiedTopology: true,
 			} as ConnectOptions,
 		);
-		console.log("Conectado ao banco");
-	} catch (error) {
-		console.log("Erro ao conectar ao banco:");
-	}
+	} catch (error) {}
 }
 
 export default connectToDatabase;

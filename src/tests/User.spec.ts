@@ -1,17 +1,15 @@
-import mongoose, { ConnectOptions } from "mongoose";
-import { Request, Response } from "express";
 import request from "supertest";
 import { server } from "../server";
+import connectToDatabase from "../helpers/connectMongo";
 require("dotenv").config();
 
 describe("This should create a user", () => {
-	const MONGO_URL = process.env.DATABASE || "";
 	beforeAll(async () => {
-		mongoose.connect(MONGO_URL);
+		await connectToDatabase();
 	});
 
-	it("a", async () => {
-		const response = await request(server).post("/create").send({
+	it("should create a user", async () => {
+		const response = await request(server).post("/user/create").send({
 			name: "name test",
 			email: "email@test.com",
 			password: "123",
