@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import bcrypt from "bcryptjs";
 interface IUser {
 	name: string;
 	cpf: number;
@@ -23,5 +23,22 @@ const UserModel = new mongoose.Schema({
 		require: true,
 	},
 });
+
+UserModel.pre("save", async function (next) {
+	return bcrypt
+		.genSalt(10)
+		.then((salt: string) =>
+			bcrypt.hash(this.password as string, salt).then((hash: string) => {
+				this.password = hash;
+				next();
+			}),
+		)
+		.catch(next);
+});
+
+UserModel.methods.comparePassword = async function (password: string) {
+	const result = await bcrypt.compare(password, this.password);
+	return result;
+};
 
 export default mongoose.model("User", UserModel);
