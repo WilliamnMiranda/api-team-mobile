@@ -1,11 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-interface IUser {
-	name: string;
-	cpf: number;
-	email: string;
-	password: string;
-}
 const UserModel = new mongoose.Schema({
 	name: String,
 	cpf: {
@@ -27,8 +21,8 @@ const UserModel = new mongoose.Schema({
 UserModel.pre("save", async function (next) {
 	return bcrypt
 		.genSalt(10)
-		.then((salt: string) =>
-			bcrypt.hash(this.password as string, salt).then((hash: string) => {
+		.then((salt: any) =>
+			bcrypt.hash(this.password as any, salt).then((hash: any) => {
 				this.password = hash;
 				next();
 			}),
