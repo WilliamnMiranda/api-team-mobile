@@ -11,8 +11,8 @@ export const create = async (req: Request, res: Response) => {
 		const token = jwt.sign({ email }, process.env.SECRET as string, {
 			expiresIn: 300000000,
 		});
-		const userLogged = { name, email, token };
-		res.status(200).json(user);
+		const userLogged = { name, email, token, cpf, password };
+		res.status(200).json(userLogged);
 	} catch (e) {
 		console.log(e);
 		res.status(422).json({ error: "Email ou CPF ja cadastrado" });
