@@ -8,6 +8,7 @@ interface IUser extends mongoose.Document {
 	email: String;
 	password: String;
 	comparePassword(password: string): Promise<boolean>;
+	projects: [String];
 }
 
 const UserModel = new mongoose.Schema({
@@ -26,6 +27,7 @@ const UserModel = new mongoose.Schema({
 		type: String,
 		require: true,
 	},
+	projects: [mongoose.Schema.Types.ObjectId],
 });
 
 UserModel.pre("save", async function (next) {
