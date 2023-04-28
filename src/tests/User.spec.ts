@@ -1,11 +1,11 @@
-/* import request from "supertest";
-import { server } from "../server";
-import connectToDatabase from "../helpers/connectMongo";
-require("dotenv").config();
-
+import request from "supertest";
+import { server } from "../tests/server";
+import connectToDatabaseTest from "../helpers/connectMongoTest";
+import UserModel from "../models/UserModel";
 describe("This should create a user", () => {
 	beforeAll(async () => {
-		await connectToDatabase();
+		await connectToDatabaseTest();
+		await UserModel.deleteMany({});
 	});
 
 	it("should create a user", async () => {
@@ -15,7 +15,6 @@ describe("This should create a user", () => {
 			password: "123",
 			cpf: 123,
 		});
-		expect(response.status).toBe(422);
+		expect(response.status).toBe(200);
 	});
 });
- */
