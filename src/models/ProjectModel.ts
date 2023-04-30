@@ -9,17 +9,22 @@ interface IProject extends mongoose.Document {
 	description: String;
 }
 
-const ProjectModel = new mongoose.Schema({
-	name: String,
-	owner: mongoose.Schema.Types.ObjectId,
-	team: [mongoose.Schema.Types.ObjectId],
-	technologies: [String],
-	likes: Number,
-	description: {
+const ProjectModel = new mongoose.Schema(
+	{
+		name: String,
+		owner: mongoose.Schema.Types.ObjectId,
+		team: [mongoose.Schema.Types.ObjectId],
+		technologies: [String],
+		likes: Number,
+		description: {
+			type: String,
+			require: true,
+		},
 		type: String,
-		require: true,
 	},
-	type: String,
-});
+	{
+		timestamps: true,
+	},
+);
 
 export default mongoose.model<IProject>("Project", ProjectModel);

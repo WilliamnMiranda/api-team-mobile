@@ -11,24 +11,29 @@ interface IUser extends mongoose.Document {
 	projects: [String];
 }
 
-const UserModel = new mongoose.Schema({
-	name: String,
-	cpf: {
-		type: Number,
-		require: true,
-		unique: true,
+const UserModel = new mongoose.Schema(
+	{
+		name: String,
+		cpf: {
+			type: Number,
+			require: true,
+			unique: true,
+		},
+		email: {
+			type: String,
+			require: true,
+			unique: true,
+		},
+		password: {
+			type: String,
+			require: true,
+		},
+		projects: [mongoose.Schema.Types.ObjectId],
 	},
-	email: {
-		type: String,
-		require: true,
-		unique: true,
+	{
+		timestamps: true,
 	},
-	password: {
-		type: String,
-		require: true,
-	},
-	projects: [mongoose.Schema.Types.ObjectId],
-});
+);
 
 UserModel.pre("save", async function (next) {
 	return bcrypt
