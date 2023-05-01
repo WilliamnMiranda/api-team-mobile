@@ -1,10 +1,6 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import ProjectModel from "../models/ProjectModel";
-import UserModel from "../models/UserModel";
-import {
-	IProject,
-	RequestProjectWithAuthentication,
-} from "../interfaces/ProjectInterface";
+import { RequestProjectWithAuthentication } from "../interfaces/ProjectInterface";
 
 export const create = async (
 	req: RequestProjectWithAuthentication,
