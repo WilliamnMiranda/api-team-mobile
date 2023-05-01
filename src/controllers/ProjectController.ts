@@ -61,3 +61,21 @@ export const deleteProject = async (
 		});
 	}
 };
+
+export const getAllUserProjects = async (
+	req: RequestProjectWithAuthentication,
+	res: Response,
+) => {
+	const { id } = req.params;
+	const projects = await ProjectModel.find({
+		owner: id,
+	});
+
+	if (!projects)
+		return res.status(404).json({
+			response: false,
+			message: "O usuario nao tem nenhum projeto criado",
+		});
+
+	res.status(200).json(projects);
+};
