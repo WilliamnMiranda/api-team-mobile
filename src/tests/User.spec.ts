@@ -5,7 +5,7 @@ import UserModel from "../models/UserModel";
 describe("This should create a user", () => {
 	beforeAll(async () => {
 		await connectToDatabaseTest();
-		await UserModel.deleteMany({});
+		await UserModel.deleteMany({ name: "name test" });
 	});
 
 	it("should create a user", async () => {
@@ -17,4 +17,8 @@ describe("This should create a user", () => {
 		});
 		expect(response.status).toBe(200);
 	});
+});
+
+afterAll((done) => {
+	server.close(done);
 });
