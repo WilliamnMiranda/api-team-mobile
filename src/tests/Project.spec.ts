@@ -1,11 +1,11 @@
 import request from "supertest";
 import { server } from "../tests/server";
 import connectToDatabaseTest from "../helpers/connectMongoTest";
-describe("This should create a userrrrrrrrrrrrrrrrrrrr", () => {
+describe("This should crud the project", () => {
 	beforeAll(async () => {
 		await connectToDatabaseTest();
 	});
-	it("should create a userrrrrrrrrrrrrrr", async () => {
+	it("should create a project", async () => {
 		const response = await request(server)
 			.post("/project/create")
 			.set(
