@@ -14,20 +14,25 @@ export const create = async (
 	if (!technologies)
 		res.status(422).json("As tecnologias do projeto sao obrigatorias");
 
-	const project = new ProjectModel({
-		name,
-		technologies,
-		description,
-		owner: req.user?._id,
-	});
-
 	try {
-		await project.save();
 		const user = await UserModel.findById(req.user?._id);
-		if (user) {
-			user.projects.push(project._id);
-			await user.save();
+		if (!user) {
+			res.status(404).json("Usuario nao encontrado");
+			return;
 		}
+
+		const project = new ProjectModel({
+			name,
+			technologies,
+			description,
+			owner: user._id,
+		});
+
+		await project.save();
+
+		user.projects.push(project._id);
+		await user.save();
+
 		res.status(200).json(project);
 	} catch (e) {
 		res.status(500).json("Error no servidor");

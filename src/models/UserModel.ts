@@ -57,6 +57,7 @@ UserModel.pre("save", async function (next) {
 
 UserModel.methods.comparePassword = async function (password: string) {
 	const result = await bcrypt.compare(password, this.password);
+	console.log(result);
 	return result;
 };
 
