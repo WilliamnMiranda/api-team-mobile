@@ -48,7 +48,20 @@ export const deleteProject = async (
 	const project = await ProjectModel.findById(id);
 
 	if (project) {
-		if (project.owner.toString() !== req.user?._id?.toString()) {
+		const userId = req.user?._id?.toString();
+
+		// Remove o ID do projeto da lista de projetos do usuário
+		const user = await UserModel.findById(userId);
+		if (!user) {
+			return res.status(404).json({
+				response: false,
+				message: "Não foi possível localizar o usuário",
+			});
+		}
+		user.projects = user.projects.filter((p) => p.toString() !== id);
+		await user.save();
+
+		if (project.owner.toString() !== userId) {
 			return res.status(401).json({
 				response: false,
 				message: "Você não tem autorização para deletar este projeto",

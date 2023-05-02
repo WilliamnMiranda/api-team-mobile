@@ -8,8 +8,8 @@ interface IUser extends mongoose.Document {
 	email: String;
 	password: String;
 	comparePassword(password: string): Promise<boolean>;
-	projects: [String];
-	subscriptions: [String];
+	projects: String[];
+	subscriptions: String[];
 }
 
 const UserModel = new mongoose.Schema(
