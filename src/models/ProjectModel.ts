@@ -9,6 +9,7 @@ interface IProject extends mongoose.Document {
 	likes: Number;
 	description: String;
 	participants: IUser[];
+	subscriptions: [String];
 }
 
 const ProjectModel = new mongoose.Schema(

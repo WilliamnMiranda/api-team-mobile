@@ -9,11 +9,16 @@ interface IUser extends mongoose.Document {
 	password: String;
 	comparePassword(password: string): Promise<boolean>;
 	projects: [String];
+	subscriptions: [String];
 }
 
 const UserModel = new mongoose.Schema(
 	{
 		name: String,
+		subscriptions: {
+			type: [mongoose.Schema.Types.ObjectId],
+			ref: "Project",
+		},
 		cpf: {
 			type: Number,
 			require: true,
@@ -28,7 +33,10 @@ const UserModel = new mongoose.Schema(
 			type: String,
 			require: true,
 		},
-		projects: [mongoose.Schema.Types.ObjectId],
+		projects: {
+			type: [mongoose.Schema.Types.ObjectId],
+			ref: "Project",
+		},
 	},
 	{
 		timestamps: true,

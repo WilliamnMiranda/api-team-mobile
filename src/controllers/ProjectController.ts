@@ -1,6 +1,7 @@
 import { Response } from "express";
 import ProjectModel from "../models/ProjectModel";
 import { RequestProjectWithAuthentication } from "../interfaces/ProjectInterface";
+import UserModel from "../models/UserModel";
 
 export const create = async (
 	req: RequestProjectWithAuthentication,
@@ -22,6 +23,11 @@ export const create = async (
 
 	try {
 		await project.save();
+		const user = await UserModel.findById(req.user?._id);
+		if (user) {
+			user.projects.push(project._id);
+			await user.save();
+		}
 		res.status(200).json(project);
 	} catch (e) {
 		res.status(500).json("Error no servidor");
