@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { IUser } from "../interfaces/UserInterface";
 
 interface IProject extends mongoose.Document {
 	name: String;
@@ -7,10 +8,19 @@ interface IProject extends mongoose.Document {
 	technologies: String[];
 	likes: Number;
 	description: String;
+	participants: IUser[];
 }
 
 const ProjectModel = new mongoose.Schema(
 	{
+		participants: {
+			type: [mongoose.Schema.Types.ObjectId],
+			ref: "User",
+		},
+		subscriptions: {
+			type: [mongoose.Schema.Types.ObjectId],
+			ref: "User",
+		},
 		name: String,
 		owner: mongoose.Schema.Types.ObjectId,
 		team: [mongoose.Schema.Types.ObjectId],
