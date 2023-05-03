@@ -79,3 +79,24 @@ export const updateSubscription = async (
 			.json({ message: "Ocorreu um erro ao modificar a assinatura." });
 	}
 };
+
+export const getUserSubscriptions = async (
+	req: RequestProjectWithAuthentication,
+	res: Response,
+) => {
+	try {
+		const { id } = req.params;
+		const subscriptions = await SubscriptionModel.find({
+			user: id,
+		}).populate("project");
+		if (!subscriptions)
+			return res.status(404).json({
+				error: "Não foi possível encontrar assinaturas para este usuário",
+			});
+		res.json(subscriptions);
+	} catch (err) {
+		res
+			.status(500)
+			.json({ message: "Ocorreu um erro ao modificar a assinatura." });
+	}
+};
