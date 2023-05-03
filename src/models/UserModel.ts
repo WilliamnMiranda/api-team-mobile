@@ -15,10 +15,6 @@ interface IUser extends mongoose.Document {
 const UserModel = new mongoose.Schema(
 	{
 		name: String,
-		subscriptions: {
-			type: [mongoose.Schema.Types.ObjectId],
-			ref: "Project",
-		},
 		cpf: {
 			type: Number,
 			require: true,

@@ -5,6 +5,7 @@ import {
 	deleteProject,
 	getAllUserProjects,
 	getOneUserProject,
+	signUpForTheProject,
 } from "../controllers/ProjectController";
 import ValidateToken from "../middlewares/ValidateToken";
 
@@ -14,4 +15,5 @@ projectRouter.post("/create", ValidateToken, create);
 projectRouter.delete("/:id", ValidateToken, deleteProject);
 projectRouter.get("/user/:id", ValidateToken, getAllUserProjects);
 projectRouter.get("/:id", ValidateToken, getOneUserProject);
+projectRouter.post("/subscribe", ValidateToken, signUpForTheProject);
 export default projectRouter;

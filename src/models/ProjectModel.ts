@@ -18,13 +18,8 @@ const ProjectModel = new mongoose.Schema(
 			type: [mongoose.Schema.Types.ObjectId],
 			ref: "User",
 		},
-		subscriptions: {
-			type: [mongoose.Schema.Types.ObjectId],
-			ref: "User",
-		},
 		name: String,
 		owner: mongoose.Schema.Types.ObjectId,
-		team: [mongoose.Schema.Types.ObjectId],
 		technologies: [String],
 		likes: Number,
 		description: {

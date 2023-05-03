@@ -115,3 +115,36 @@ export const getOneUserProject = async (
 
 	return res.status(200).json(project);
 };
+
+export const signUpForTheProject = async (
+	req: RequestProjectWithAuthentication,
+	res: Response,
+) => {
+	const { projectId } = req.body;
+	const project = await ProjectModel.findById(projectId);
+	if (!project) return res.status(404).json("Projeto nao encontrado");
+
+	// Check if user is already subscribed
+	const isAlreadySubscribed = project.subscriptions.includes(req.user?._id);
+	if (isAlreadySubscribed) {
+		return res.status(400).json("Usuario ja esta inscrito neste projeto");
+	}
+
+	try {
+		project.subscriptions.push(req.user?._id);
+		await project.save();
+		res.status(200).json(project);
+	} catch (e) {
+		res.status(500).json({
+			response: false,
+			message: "Error interno no servidor",
+		});
+	}
+};
+
+export const acceptOrRejectOrders = async (
+	req: RequestProjectWithAuthentication,
+	res: Response,
+) => {
+	const { userId } = req.body;
+};

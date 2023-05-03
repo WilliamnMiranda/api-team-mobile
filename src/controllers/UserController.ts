@@ -1,6 +1,8 @@
 import UserModel from "../models/UserModel";
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
+import { RequestProjectWithAuthentication } from "../interfaces/ProjectInterface";
+import ProjectModel from "../models/ProjectModel";
 export const create = async (req: Request, res: Response) => {
 	const { name, email, password, cpf } = req.body;
 	if (!name || !email || !cpf || !password)
