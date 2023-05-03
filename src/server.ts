@@ -6,6 +6,7 @@ import connectToDatabase from "./helpers/connectMongo";
 // import routes
 import userRouter from "./routes/UserRoutes";
 import projectRouter from "./routes/ProjectRoutes";
+import subscriptionRouter from "./routes/SubscriptionRoutes";
 
 // configs
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 // routes
 app.use("/user", userRouter);
 app.use("/project", projectRouter);
+app.use("/subscription", subscriptionRouter);
 export const server = app.listen(PORT, () => {
 	console.log(`Example app listening on port ${PORT}`);
 });
