@@ -15,6 +15,13 @@ interface IUser extends mongoose.Document {
 const UserModel = new mongoose.Schema(
 	{
 		name: String,
+		interests: {
+			type: [String],
+		},
+		worksWith: {
+			type: String,
+			default: "none",
+		},
 		cpf: {
 			type: Number,
 			require: true,
