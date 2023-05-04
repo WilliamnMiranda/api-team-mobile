@@ -148,3 +148,18 @@ export const acceptOrRejectOrders = async (
 ) => {
 	const { userId } = req.body;
 };
+
+export const getRelevanteProjects = async (
+	req: RequestProjectWithAuthentication,
+	res: Response,
+) => {
+	const user = await UserModel.findById(req.body._id); // busca o usuário pelo id
+
+	const interests = user!.interests; // obtém os interesses do usuário
+
+	const projects = await ProjectModel.aggregate([
+		{ $match: { technologies: { $in: interests } } },
+		{ $sort: { views: -1 } },
+		{ $limit: 10 },
+	]);
+};

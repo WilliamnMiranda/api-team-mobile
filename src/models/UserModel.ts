@@ -10,6 +10,8 @@ interface IUser extends mongoose.Document {
 	comparePassword(password: string): Promise<boolean>;
 	projects: String[];
 	subscriptions: String[];
+	interests: String[];
+	worksWith: String;
 }
 
 const UserModel = new mongoose.Schema(
