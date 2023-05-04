@@ -10,6 +10,7 @@ interface IProject extends mongoose.Document {
 	description: String;
 	participants: IUser[];
 	subscriptions: [String];
+	views: Number;
 }
 
 const ProjectModel = new mongoose.Schema(
@@ -27,6 +28,10 @@ const ProjectModel = new mongoose.Schema(
 			require: true,
 		},
 		type: String,
+		views: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{
 		timestamps: true,
