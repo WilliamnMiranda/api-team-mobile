@@ -100,3 +100,34 @@ export const getUserSubscriptions = async (
 			.json({ message: "Ocorreu um erro ao modificar a assinatura." });
 	}
 };
+
+export const getAllSubscriptionProject = async (
+	req: RequestProjectWithAuthentication,
+	res: Response,
+) => {
+	try {
+		const { projectId } = req.params;
+
+		// verificar se o projeto existe
+		const project = await ProjectModel.findById(projectId);
+		if (!project) {
+			return res.status(404).json({ error: "Projeto não encontrado" });
+		}
+
+		// verificar se o usuário atual é o líder do projeto
+		const userId = req.user?._id; // assumindo que você está usando autenticação JWT e já extraiu o ID do usuário do token
+		if (project.owner.toString() !== userId.toString()) {
+			return res.status(401).json({
+				error:
+					"Você não tem permissão para acessar as inscrições deste projeto",
+			});
+		}
+
+		// encontrar todas as inscrições para este projeto
+		const subscriptions = await SubscriptionModel.find({
+			project: projectId,
+		}).populate("user");
+
+		res.json(subscriptions);
+	} catch (err) {}
+};
