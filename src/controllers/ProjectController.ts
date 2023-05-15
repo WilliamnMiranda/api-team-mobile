@@ -7,7 +7,8 @@ export const create = async (
   req: RequestProjectWithAuthentication,
   res: Response
 ) => {
-  const { name, technologies, description, coreTechnology, level } = req.body;
+  const { name, technologies, description, coreTechnology, level, functions } =
+    req.body;
   if (!name) res.status(422).json("O nome do projeto e obrigatorio");
   if (!description)
     res.status(422).json("A descricao do projeto e obrigatoria");
@@ -27,6 +28,7 @@ export const create = async (
       description,
       coreTechnology,
       level,
+      functions,
       owner: user._id,
     });
 

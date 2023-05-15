@@ -13,6 +13,7 @@ interface IProject extends mongoose.Document {
   views: Number;
   coreTechnology: String;
   level: String;
+  functions: String[];
 }
 
 const ProjectModel = new mongoose.Schema(
@@ -38,6 +39,10 @@ const ProjectModel = new mongoose.Schema(
       require: true,
     },
     type: String,
+    functions: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Types",
+    },
     views: {
       type: Number,
       default: 0,
