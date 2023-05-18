@@ -38,6 +38,7 @@ const ProjectModel = new mongoose.Schema(
       type: String,
       require: true,
     },
+    ownerLinkedin: String,
     /* functions: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "Types",

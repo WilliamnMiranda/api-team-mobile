@@ -12,6 +12,7 @@ export const create = async (
     technologies,
     description,
     coreTechnology,
+    ownerLinkedin,
     level /*functions*/,
   } = req.body;
   if (!name) res.status(422).json("O nome do projeto e obrigatorio");
@@ -35,6 +36,7 @@ export const create = async (
       level,
       /*functions,*/
       owner: user._id,
+      ownerLinkedin,
     });
 
     await project.save();
