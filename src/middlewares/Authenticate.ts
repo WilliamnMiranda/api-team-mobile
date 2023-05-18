@@ -22,7 +22,11 @@ const AuthenticateUser = async (
         return res
           .status(500)
           .json({ message: "Failed to authenticate token." });
-      req.user = await User.findOne({ email: decoded.email });
+      const user = await User.findOne({ email: decoded.email });
+      if (user) {
+        const authenticatedUser: IUser = user;
+        req.user = authenticatedUser;
+      }
       next();
     }
   );

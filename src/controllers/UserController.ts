@@ -38,11 +38,11 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-export const auth = async (
+export const authUser = async (
   req: RequestProjectWithAuthentication,
   res: Response
 ) => {
-  res
-    .status(200)
-    .json({ name: req.user?.name, email: req.user?.email, _id: req.user?._id });
+  console.log(req.user?.name);
+  const { name, email, cpf, _id } = req.user || {};
+  res.status(200).json({ name, email, cpf, _id });
 };

@@ -8,6 +8,7 @@ const cors = require("cors");
 import userRouter from "./routes/UserRoutes";
 import projectRouter from "./routes/ProjectRoutes";
 import subscriptionRouter from "./routes/SubscriptionRoutes";
+import optionsRouter from "./routes/OptionsRoutes";
 
 // configs
 const app = express();
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/user", userRouter);
 app.use("/project", projectRouter);
 app.use("/subscription", subscriptionRouter);
+app.use("/options", optionsRouter);
 export const server = app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
