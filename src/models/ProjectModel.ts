@@ -38,11 +38,10 @@ const ProjectModel = new mongoose.Schema(
       type: String,
       require: true,
     },
-    type: String,
-    functions: {
+    /* functions: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "Types",
-    },
+    },*/
     views: {
       type: Number,
       default: 0,
