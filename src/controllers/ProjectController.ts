@@ -1,4 +1,4 @@
-import { Response } from "express";
+import { Response, Request } from "express";
 import ProjectModel from "../models/ProjectModel";
 import { RequestProjectWithAuthentication } from "../interfaces/ProjectInterface";
 import UserModel from "../models/UserModel";
@@ -154,24 +154,19 @@ export const signUpForTheProject = async (
   }
 };
 
-export const acceptOrRejectOrders = async (
-  req: RequestProjectWithAuthentication,
-  res: Response
-) => {
-  const { userId } = req.body;
-};
+export const recents = async (req: Request, res: Response) => {
+  const page = parseInt(req.query.page as string) || 1;
+  const limit = 16;
 
-export const getRelevanteProjects = async (
-  req: RequestProjectWithAuthentication,
-  res: Response
-) => {
-  const user = await UserModel.findById(req.body._id); // busca o usuário pelo id
+  try {
+    const projects = await ProjectModel.find()
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
 
-  const interests = user!.interests; // obtém os interesses do usuário
-
-  const projects = await ProjectModel.aggregate([
-    { $match: { technologies: { $in: interests } } },
-    { $sort: { views: -1 } },
-    { $limit: 10 },
-  ]);
+    res.json(projects);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Erro ao recuperar os projetos." });
+  }
 };

@@ -5,6 +5,7 @@ import { RequestProjectWithAuthentication } from "../interfaces/ProjectInterface
 import ProjectModel from "../models/ProjectModel";
 export const create = async (req: Request, res: Response) => {
   const { name, email, password, cpf } = req.body;
+  console.log(cpf, email);
   if (!name || !email || !cpf || !password)
     res.status(406).json({ error: "Todos os campos sao obrigatorios" });
   const user = new UserModel({ name, email, password, cpf });
@@ -32,6 +33,7 @@ export const login = async (req: Request, res: Response) => {
       const token = jwt.sign({ email }, process.env.SECRET as string, {
         expiresIn: 300000000,
       });
+      console.log(name, cpf);
       const userLogged = { name, email, _id, token, cpf };
       res.status(200).json(userLogged);
     } else res.status(400).json("senha incorreta");

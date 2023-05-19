@@ -3,9 +3,9 @@ import { RequestProjectWithAuthentication } from "../interfaces/ProjectInterface
 import Types from "../models/TypesModel";
 
 export const create = async (req: Request, res: Response) => {
-  const { name } = req.body;
+  const { label } = req.body;
   const type = await new Types({
-    name,
+    label,
   });
 
   try {
@@ -20,5 +20,8 @@ export const create = async (req: Request, res: Response) => {
 
 export const getOptions = async (req: Request, res: Response) => {
   const options = await Types.find({});
-  res.status(200).json(options);
+  const optionsReturn = options.map((option: any) => {
+    return { label: option.label, value: option.label };
+  });
+  res.status(200).json(optionsReturn);
 };
