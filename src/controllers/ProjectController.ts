@@ -98,9 +98,8 @@ export const getAllUserProjects = async (
   req: RequestProjectWithAuthentication,
   res: Response
 ) => {
-  const { id } = req.params;
   const projects = await ProjectModel.find({
-    owner: id,
+    owner: req.user?.id,
   });
 
   if (!projects)
