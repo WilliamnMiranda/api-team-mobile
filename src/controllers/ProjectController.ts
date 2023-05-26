@@ -118,11 +118,15 @@ export const getOneUserProject = async (
   const { id } = req.params;
   const project = await ProjectModel.findById(id);
 
-  if (!project)
+  if (!project) {
     return res.status(404).json({
       response: false,
       message: "Nenhum projeto encontrado",
     });
+  }
+
+  project.views = +project.views + 1;
+  await project.save();
 
   return res.status(200).json(project);
 };
