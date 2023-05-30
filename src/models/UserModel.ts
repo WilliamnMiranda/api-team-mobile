@@ -8,6 +8,7 @@ interface IUser extends mongoose.Document {
   email: String;
   password: String;
   comparePassword(password: string): Promise<boolean>;
+  encryptPassword(password: string): Promise<void>;
   projects: String[];
   subscriptions: String[];
   interests: String[];
@@ -48,17 +49,11 @@ const UserModel = new mongoose.Schema(
   }
 );
 
-UserModel.pre("save", async function (next) {
-  return bcrypt
-    .genSalt(10)
-    .then((salt: any) =>
-      bcrypt.hash(this.password as any, salt).then((hash: any) => {
-        this.password = hash;
-        next();
-      })
-    )
-    .catch(next);
-});
+UserModel.methods.encryptPassword = async function (password: string) {
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(password, salt);
+  this.set("password", hash);
+};
 
 UserModel.methods.comparePassword = async function (password: string) {
   const result = await bcrypt.compare(password, this.password);

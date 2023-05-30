@@ -24,8 +24,7 @@ export const create = async (
   try {
     const user = await UserModel.findById(req.user?._id);
     if (!user) {
-      res.status(404).json("Usuario nao encontrado");
-      return;
+      return res.status(404).json("Usuario nao encontrado");
     }
 
     const project = new ProjectModel({
