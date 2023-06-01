@@ -16,6 +16,11 @@ subscriptionRouter.put("/change", ValidateToken, updateSubscription);
 subscriptionRouter.put("/change", ValidateToken, updateSubscription);
 subscriptionRouter.get("/user", ValidateToken, getUserSubscriptions);
 subscriptionRouter.get(
+  "/user/projects",
+  ValidateToken,
+  getAllSubscriptionProject
+);
+subscriptionRouter.get(
   "/project/:projectId",
   ValidateToken,
   getAllSubscriptionProject

@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { RequestProjectWithAuthentication } from "../interfaces/ProjectInterface";
 import ProjectModel from "../models/ProjectModel";
 import SubscriptionModel from "../models/SubscriptionModel";
@@ -101,7 +101,7 @@ export const getUserSubscriptions = async (
   }
 };
 
-export const getAllSubscriptionProject = async (
+export const getAllSubscriptionProjects = async (
   req: RequestProjectWithAuthentication,
   res: Response
 ) => {
@@ -144,4 +144,36 @@ export const getAllSubscriptionsUser = async (
   return res.status(404).json({
     error: "Nenhuma inscricao encontrada",
   });
+};
+
+export const getAllSubscriptionProject = async (
+  req: RequestProjectWithAuthentication,
+  res: Response
+) => {
+  try {
+    const userId = req.user?._id;
+
+    const subscriptions = await SubscriptionModel.aggregate([
+      {
+        $lookup: {
+          from: "projects",
+          localField: "project",
+          foreignField: "_id",
+          as: "project",
+        },
+      },
+      {
+        $match: {
+          "project.owner": userId,
+        },
+      },
+    ]);
+
+    return res.status(200).json(subscriptions);
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ error: "Ocorreu um erro ao buscar as inscrições" });
+  }
 };
