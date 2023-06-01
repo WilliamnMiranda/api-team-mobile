@@ -157,9 +157,17 @@ export const getAllSubscriptionProject = async (
       {
         $lookup: {
           from: "projects",
-          localField: "project",
-          foreignField: "_id",
+          localField: "project", //123
+          foreignField: "_id", //123
           as: "project",
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "user",
         },
       },
       {
