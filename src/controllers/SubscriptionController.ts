@@ -157,8 +157,8 @@ export const getAllSubscriptionProject = async (
       {
         $lookup: {
           from: "projects",
-          localField: "project", //123
-          foreignField: "_id", //123
+          localField: "project",
+          foreignField: "_id",
           as: "project",
         },
       },
@@ -173,6 +173,11 @@ export const getAllSubscriptionProject = async (
       {
         $match: {
           "project.owner": userId,
+        },
+      },
+      {
+        $project: {
+          "user.password": 0,
         },
       },
     ]);
