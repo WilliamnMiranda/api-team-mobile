@@ -137,7 +137,7 @@ export const getAllSubscriptionsUser = async (
   const userId = req.user?._id;
   const subscriptions = await SubscriptionModel.find({
     user: userId,
-  }).populate("project");
+  }).populate(["project", "user"]);
 
   if (subscriptions) return res.status(200).json(subscriptions);
 
